@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="$(SourceDir)/LinesZero.Core/LinesZero.Core.csproj" />
+  </ItemGroup>
+</Project>

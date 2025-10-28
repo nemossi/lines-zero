@@ -1,0 +1,59 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Code Coverage (.NET)
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Prepare: Enlist + Restore + Build
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build -c Release -p:Deterministic=true -p:ContinuousIntegrationBuild=true -v normal --no-restore
+
+    # Test with Code Coverage
+    - name: Test with code coverage
+      run: dotnet test -c Release -v normal -s ./.build/xunit.coverlet.runsettings --results-directory ./TestResults --no-build
+
+    # Test Report
+    - name: Install ReportGenerator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
+    - name: Generate code coverage report
+      run: reportgenerator -reports:./TestResults/**/coverage.cobertura.xml -targetdir:./coveragereport -reporttypes:Html
+    - name: Upload coverage report as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: ./coveragereport
+    - name: Upload coverage report to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        fail_ci_if_error: true
+        files: ./TestResults/**/coverage.cobertura.xml
+        flags: unittests
+        name: codecov-umbrella
+        verbose: true
+        token: ${{ secrets.CODECOV_TOKEN }}

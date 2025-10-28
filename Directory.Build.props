@@ -1,0 +1,59 @@
+<Project>
+
+  <!-- Home Directory of this Git repository (Root) and its derived directories -->
+  <PropertyGroup Label="Targets">
+    <HomePlatformSpecific>$([System.IO.Path]::GetDirectoryName('$(MSBuildThisFileDirectory)'))</HomePlatformSpecific>
+    <Home>$(HomePlatformSpecific.Replace('\', '/'))</Home>
+    <BuildDir>$(Home)/.build</BuildDir>
+    <SourceDir>$(Home)/src</SourceDir>
+    <PackageDir>$(Home)/pkg</PackageDir>
+    <TestDir>$(Home)/test</TestDir>
+    <ToolDir>$(Home)/tool</ToolDir>
+    <ProjectDir>$(MSBuildProjectDirectory.Replace('\', '/'))</ProjectDir>
+  </PropertyGroup>
+
+  <!-- Project Type, detected from its project name and location -->
+  <!--
+          Source: High quality codebase for runtime living use (production)
+          Package: Nodeless package for distribution (production, codeless)
+          Test: Unit test, functionality tests, integration tests, benchmark tests (non-producton)
+          Tool: Examples, demo, playground or other utility tools (non-production)
+  -->
+  <PropertyGroup Label="ProjectType" Condition="$(ProjectDir.StartsWith('$(SourceDir)'))">
+    <ProjectType>Source</ProjectType>
+  </PropertyGroup>
+  <PropertyGroup Label="ProjectType" Condition="$(ProjectDir.StartsWith('$(SourceDir)')) And $(MSBuildProjectName.EndsWith('.Tests'))">
+    <ProjectType>Test</ProjectType>
+  </PropertyGroup>
+  <PropertyGroup Label="ProjectType" Condition="$(ProjectDir.StartsWith('$(SourceDir)')) And $(MSBuildProjectName.EndsWith('.Package'))">
+    <ProjectType>Package</ProjectType>
+  </PropertyGroup>
+  <PropertyGroup Label="ProjectType" Condition="$(ProjectDir.StartsWith('$(PackageDir)'))">
+    <ProjectType>Package</ProjectType>
+  </PropertyGroup>
+  <PropertyGroup Label="ProjectType" Condition="$(ProjectDir.StartsWith('$(TestDir)'))">
+    <ProjectType>Test</ProjectType>
+  </PropertyGroup>
+  <PropertyGroup Label="ProjectType" Condition="$(ProjectDir.StartsWith('$(ToolDir)'))">
+    <ProjectType>Tool</ProjectType>
+  </PropertyGroup>
+
+  <!-- Build Targets -->
+  <PropertyGroup Label="Targets">
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <!-- C# Language and related feature flags -->
+  <PropertyGroup Label="Language">
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Item/Property of BuildCops, Prebuilt, Release based on Project Type -->
+  <Import Project="$(BuildDir)/props/BuildCops.props" />
+  <Import Project="$(BuildDir)/props/Prebuilt.props" />
+  <Import Project="$(BuildDir)/props/Release.props" />
+
+</Project>

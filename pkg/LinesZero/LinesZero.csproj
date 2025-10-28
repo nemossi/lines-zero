@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Nuget">
+    <PackageId>LinesZero</PackageId>
+    <Description>Lines Zero is a zero-copy text line-breaking library for C#.</Description>
+    <PackageTags>performance,zero-copy,text-processing</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>lines-zero.png</PackageIcon>
+  </PropertyGroup>
+  <ItemGroup Label="Nuget">
+    <None Include="README.md" pack="true" PackagePath="." />
+    <None Include="lines-zero.png" Pack="true" PackagePath="."/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceDir)/LinesZero.Core/LinesZero.Core.csproj" />
+  </ItemGroup>
+  
+</Project>

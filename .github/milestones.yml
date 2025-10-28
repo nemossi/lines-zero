@@ -1,0 +1,25 @@
+milestones:
+  - title: H
+    description: Hydrogen
+    due_on: 2025-01-31T23:59:59Z
+    state: closed
+  - title: He
+    description: Helium
+    due_on: 2025-02-28T23:59:59Z
+    state: closed
+  - title: Li
+    description: Lithium
+    due_on: 2025-03-31T23:59:59Z
+    state: open
+  - title: Be
+    description: Beryllium
+    due_on: 2025-04-30T23:59:59Z
+    state: open
+  - title: B
+    description: Boron
+    due_on: 2025-05-31T23:59:59Z
+    state: open
+  - title: C
+    description: Carbon
+    due_on: 2025-06-30T23:59:59Z
+    state: open
