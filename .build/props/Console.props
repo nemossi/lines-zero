@@ -45,7 +45,6 @@
   <PropertyGroup>
     <Prefer32Bit>false</Prefer32Bit>
     <PublishReadyToRun>true</PublishReadyToRun>
-    <!-- TODO: <PublishAot>true</PublishAot> -->
   </PropertyGroup>
 
 </Project>

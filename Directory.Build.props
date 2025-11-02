@@ -51,6 +51,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Debugging and Optimization -->
+  <PropertyGroup>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
   <!-- Item/Property of BuildCops, Prebuilt, Release based on Project Type -->
   <Import Project="$(BuildDir)/props/BuildCops.props" />
   <Import Project="$(BuildDir)/props/Prebuilt.props" />

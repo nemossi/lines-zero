@@ -1,12 +1,12 @@
-namespace LinesZero.Test;
+﻿namespace LinesZero.Core.Tests;
 
 public sealed class ContentViewTest
 {
     [Theory]
     [InlineData("Hello World", new int[] { 11 })]
     [InlineData("Hello World\n", new int[] { 12 })]
-    [InlineData("Hello World\nHello World", new int[] { 12, 11})]
-    public void TestCreateContentView(string input, int[] expectedLines)
+    [InlineData("Hello World\nHello World", new int[] { 12, 11 })]
+    public void TestCreateInstance(string input, int[] expectedLines)
     {
         // Arrange
         var lineProcessor = new MarkdownLineProcessor(width: 0, LineEndings.LF, dual: false);
@@ -17,7 +17,7 @@ public sealed class ContentViewTest
         // Assert
         contentView.Count.Should().Be(expectedLines.Length);
         var start = 0;
-        for(var i=0; i<contentView.Count; i++)
+        for (var i = 0; i < contentView.Count; i++)
         {
             var length = expectedLines[i];
             var expectedLine = input.AsSpan(start, length).ToString();
