@@ -40,20 +40,10 @@ public class MarkdownLineProcessor
         ArgumentOutOfRangeException.ThrowIfGreaterThan(start, input.Length, nameof(start));
         ArgumentOutOfRangeException.ThrowIfLessThan(start, 0, nameof(start));
 
-        if (this.Width <= 0)
-        {
-            var index = input.IndexOf(this.Eol, start, StringComparison.InvariantCultureIgnoreCase);
-            hasMore = index >= 0 && index + this.Eol.Length < input.Length;
-            return hasMore ? index + this.Eol.Length : input.Length;
-        }
-        else
-        {
-            var remained = input.Length - start;
-            var count = this.Width < remained ? this.Width : remained;
-            var index = input.IndexOf(this.Eol, start, count, StringComparison.InvariantCultureIgnoreCase);
-            index = index >= 0 ? index + this.Eol.Length : start + count;
-            hasMore = index < input.Length;
-            return index;
-        }
+        var count = this.Width > 0 ? Math.Min(this.Width, input.Length - start) : input.Length - start;
+        var index = input.IndexOf(this.Eol, start, count, StringComparison.InvariantCultureIgnoreCase);
+        var next = index >= 0 ? index + this.Eol.Length : start + count;
+        hasMore = next < input.Length;
+        return next;
     }
 }
