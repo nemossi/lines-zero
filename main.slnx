@@ -1,0 +1,12 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/pkg/">
+    <Project Path="pkg/LinesZero/LinesZero.csproj" />
+    <Project Path="src/LinesZero.Core.Tests/LinesZero.Core.Tests.csproj" />
+    <Project Path="src/LinesZero.Core/LinesZero.Core.csproj" />
+  </Folder>
+</Solution>

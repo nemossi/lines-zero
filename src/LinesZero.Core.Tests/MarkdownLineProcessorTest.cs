@@ -22,7 +22,6 @@ public sealed class MarkdownLineProcessorTest
         lineProcessor.DualLineEndings.Should().Be(dual);
     }
 
-
     [Theory]
     [InlineData(0, LineEndings.LF, false, "Hello World", false, 11)]
     [InlineData(0, LineEndings.LF, true, "Hello World", false, 11)]
