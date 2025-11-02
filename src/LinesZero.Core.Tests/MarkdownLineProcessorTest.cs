@@ -40,6 +40,10 @@ public sealed class MarkdownLineProcessorTest
     [InlineData(11, LineEndings.LF, false, "Hello World", false, 11)]
     [InlineData(10, LineEndings.LF, false, "Hello World", true, 10)]
     [InlineData(5, LineEndings.LF, false, "Hello World", true, 5)]
+    [InlineData(80, LineEndings.LF, false, "Hello World\nHello World", true, 12)]
+    [InlineData(11, LineEndings.LF, false, "Hello World\nHello World", true, 11)]
+    [InlineData(10, LineEndings.LF, false, "Hello World\nHello World", true, 10)]
+    [InlineData(5, LineEndings.LF, false, "Hello World\nHello World", true, 5)]
     public void TestProcessLines(int width, string eol, bool dual, string input, bool expectedHasMore, int expectedIndex)
     {
         // Arrange
